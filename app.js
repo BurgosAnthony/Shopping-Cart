@@ -6,12 +6,14 @@ var logger = require('morgan');
 const expressHBS = require('express-handlebars');
 const Handlebars = require('handlebars')
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
-
+const mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
 // var usersRouter = require('./routes/users');
 
 var app = express();
+
+mongoose.connect('localhost:27017/shopping');
 // This is a test
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
