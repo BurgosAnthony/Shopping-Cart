@@ -13,7 +13,7 @@ var indexRouter = require('./routes/index');
 
 var app = express();
 
-mongoose.connect('localhost:27017/shopping');
+mongoose.connect('mongodb://localhost:27017/shopping', { useNewUrlParser: true });
 // This is a test
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));

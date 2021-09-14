@@ -2,6 +2,8 @@ const Product = require('../models/product');
 
 const mongoose = require('mongoose');
 
+// This connects to mongodb. Copy/Past for future seeds & projects 
+// Change the session name each time (shopping)
 mongoose.connect('mongodb://localhost:27017/shopping', { useNewUrlParser: true });
 
 const products = [
