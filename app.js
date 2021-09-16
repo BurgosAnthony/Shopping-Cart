@@ -9,11 +9,14 @@ const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-ac
 const mongoose = require('mongoose');
 const session = require('express-session');
 var indexRouter = require('./routes/index');
+const passport = require('passport');
+const flash = require('connect-flash');
 // var usersRouter = require('./routes/users');
 
 var app = express();
 
 mongoose.connect('mongodb://localhost:27017/shopping', { useNewUrlParser: true });
+require('./config/passport');
 // This is a test
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
@@ -25,6 +28,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({ secret: 'thisisasecret', resave: false, saveUninitialized: false }));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
