@@ -11,6 +11,8 @@ const session = require('express-session');
 var indexRouter = require('./routes/index');
 const passport = require('passport');
 const flash = require('connect-flash');
+const validator = require('express-validator');
+// const bodyPaser = require('body-parser');
 // var usersRouter = require('./routes/users');
 
 var app = express();
@@ -26,6 +28,7 @@ app.set('view engine', '.hbs');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(validator());
 app.use(cookieParser());
 app.use(session({ secret: 'thisisasecret', resave: false, saveUninitialized: false }));
 app.use(flash());
