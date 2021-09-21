@@ -9,6 +9,7 @@ const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-ac
 const mongoose = require('mongoose');
 const session = require('express-session');
 var indexRouter = require('./routes/index');
+const userRoutes = require('./routes/user')
 const passport = require('passport');
 const flash = require('connect-flash');
 const validator = require('express-validator');
@@ -36,7 +37,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(function (req, res, next) {
+  res.locals.login = req.isAuthenticated();
+  next();
+})
+
+app.use('/user', userRoutes)
 app.use('/', indexRouter);
+
 // app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
