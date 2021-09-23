@@ -13,6 +13,7 @@ const userRoutes = require('./routes/user')
 const passport = require('passport');
 const flash = require('connect-flash');
 const validator = require('express-validator');
+const MongoStore = require('connect-mongo')(session);
 // const bodyPaser = require('body-parser');
 // var usersRouter = require('./routes/users');
 
@@ -31,7 +32,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(validator());
 app.use(cookieParser());
-app.use(session({ secret: 'thisisasecret', resave: false, saveUninitialized: false }));
+app.use(session({
+  secret: 'thisisasecret',
+  resave: false,
+  saveUninitialized: false,
+  store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  cookie: { maxAge: 180 * 60 * 1000 }
+}));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
@@ -39,6 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function (req, res, next) {
   res.locals.login = req.isAuthenticated();
+  res.locals.session = req.session;
   next();
 })
 
