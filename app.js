@@ -1,4 +1,5 @@
 var createError = require('http-errors');
+require('dotenv').config();
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -16,8 +17,10 @@ const validator = require('express-validator');
 const MongoStore = require('connect-mongo')(session);
 // const bodyPaser = require('body-parser');
 // var usersRouter = require('./routes/users');
-
 var app = express();
+const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY)
+
+
 
 mongoose.connect('mongodb://localhost:27017/shopping', { useNewUrlParser: true });
 require('./config/passport');
